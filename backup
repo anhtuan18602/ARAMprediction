@@ -1,0 +1,147 @@
+"""
+path = Path("./porobot/data")
+model_file = 'league_model.joblib'
+scaler_file = 'league_scaler.pkl'
+
+
+model = joblib.load((path / model_file).resolve())
+scaler = joblib.load((path / scaler_file).resolve())
+"""
+"""
+for stat in blitz[0]:
+
+    if len(blitz) == 0 or len(opgg) == 0:
+        return None
+    features = []
+    for column in columns:
+        if(column == "m_winrate"):
+            winrate_str = blitz[0][0].find('h3').get_text()
+            features.append(float(winrate_str[:-1])/100)
+
+        if(column == "m_kda"):
+            try:
+                kda_str = blitz[0][1].find('h3').get_text()
+                if kda_str == 'NaN':
+                    return None
+                features.append(float(stats['kda']))
+            except:
+                features.append(float(10))
+        if(column == "m_dmg"):
+            dmg_str = blitz[0][3].find('h3').get_text()
+            features.append(float(dmg_str.replace(',','')))
+        if(column = "m_nof_games"):
+            nof_games_str = blitz[1].get_text()
+            nof_games = int(nof_games_str.split()[0])
+        if(column = "m_attack"):
+
+
+dmg = float(stats['dmg/min'].replace(',',''))
+
+
+nof_games_str = nof_games_scraped.get_text()
+nof_games = int(nof_games_str.split()[0])
+champ_info = list(self.champions[champion_id].values())
+print(winrate_str, nof_games_str, champ_info)
+features = [winrate, nof_games]
+features.extend(champ_info)
+return features
+"""
+
+"""
+coefficients = model.coef_[0]
+odds_ratios = np.exp(coefficients)
+
+feature_names = columns
+feature_impact = pd.DataFrame({'Feature': feature_names, 'Coefficient': coefficients, 'Odds Ratio': odds_ratios})
+print(feature_impact)
+"""
+
+
+"""
+rndforest = RandomForestClassifier()
+rfe = RFE(rndforest, n_features_to_select=5)  # Choose the number of features you want to select
+rfe.fit(X_train, y_train)
+
+selected_features_rfe = X_train.columns[rfe.support_]
+X_train_rfe = X_train[selected_features_rfe]
+print(X_train_rfe.columns)
+X_test_rfe = X_test[selected_features_rfe]
+
+
+selector = SelectKBest(score_func=f_classif, k=5)
+selector.fit(X_train, y_train)
+
+selected_features_kbest = X_train.columns[selector.get_support()]
+X_train_kbest = X_train[selected_features_kbest]
+X_test_kbest = X_test[selected_features_kbest]
+print(X_train_kbest.columns)
+
+
+rndforest_rfe = RandomForestClassifier()
+rndforest_kbest = RandomForestClassifier()
+
+rndforest_rfe.fit(X_train_rfe, y_train)
+rndforest_kbest.fit(X_train_kbest, y_train)
+models = [rndforest_rfe, rndforest_kbest]
+for m in range(2):
+    if m == 0:
+        y_pred = models[m].predict(X_test_rfe)
+    else:
+        y_pred = models[m].predict(X_test_kbest)
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+    conf_matrix = confusion_matrix(y_test, y_pred)
+    print("Accuracy:", accuracy)
+    print("Precision:", precision)
+    print("Recall:", recall)
+    print("F1 Score:", f1)
+    print("Confusion Matrix:\n", conf_matrix)
+    print("\n")
+
+"""
+
+
+"""
+def get_matches_ids(match_ids, summoner_name, mass_region, region, api_key, db):
+    members = ['Cozy Bearrrrr',
+               'UnbeatableVN',
+               '3 Giờ Rửa Chim',
+               'Lushen2711',
+               'Sứ Giả Lọk Khe',
+               'Wavepin']
+    matches_participants = []
+
+    for match_id in match_ids:
+        match_data = get_match_data(match_id, mass_region, api_key)['info']
+        for participant in match_data['participants']:
+            if participant['summonerName'] not in members:
+                matches_participants.append(participant["puuid"])
+    for puuid in matches_participants:
+        match_ids = get_match_ids(puuid, mass_region, 20, 450, api_key)
+        games, df = gather_data(puuid, match_ids, mass_region, api_key)
+        db.add_matches(games)
+"""
+
+"""
+    def get_masteries(participants, region, api_key):
+
+        allies_mastery = 0
+        enemies_mastery = 0
+
+        for participant in participants:
+
+
+
+            if not mastery:
+                return None
+            print(participant['champion_id'], mastery["championPoints"])
+            if participant['team_id'] == 100:
+                allies_mastery += mastery["championPoints"]
+            else:
+                enemies_mastery += mastery["championPoints"]
+
+        return (allies_mastery - enemies_mastery)
+
+        """
